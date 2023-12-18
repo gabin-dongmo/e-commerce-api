@@ -36,14 +36,8 @@ router.post("/login", async (req: Request, res: Response) => {
   return res.json({ user, token });
 });
 
-router.get("/me", auth, async (req: Request, res: Response) => {
-  throw new Error("Ooops...");
-  const token = req.headers.authorization;
-  const jsonPayload = JSON.parse(
-    Buffer.from(token.split(".")[1], "base64").toString(),
-  );
-
-  const user = await authService.findUserById(jsonPayload.id);
+router.get("/me", auth, async (req: Request & { user: any }, res: Response) => {
+  const user = await authService.findUserById(req.user.id);
   return res.json({ user });
 });
 
