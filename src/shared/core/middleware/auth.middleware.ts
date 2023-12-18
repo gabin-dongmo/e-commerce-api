@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { JWT_SECRET } from "../config";
 
-export const authMiddleware = async (
+export const auth = async (
   req: Request & { user: any },
   res: Response,
   next: NextFunction,

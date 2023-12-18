@@ -1,14 +1,57 @@
-import { Router } from "express";
-import * as authController from "../controllers/auth.controller";
-import { authMiddleware } from "../shared/core/middleware/auth.middleware";
+import { Request, Response, Router } from "express";
+import { auth } from "../shared/core/middleware/auth";
+import { CreateUserInput, LoginUserInput } from "../shared/types/models";
+import authService from "../domain/services/auth.service";
+import * as bcrypt from "bcryptjs";
 
-const AuthRoute = () => {
-  const router = Router();
-  const prefix: string = "/auth";
-  router.post(`${prefix}/register`, authController.registerController);
-  router.post(`${prefix}/login`, authController.loginController);
-  router.get(`${prefix}/me`, authMiddleware, authController.me);
-  return router;
-};
+const router = Router();
 
-export { AuthRoute };
+router.post('/register', async (req: Request, res: Response) => {
+  const { email, fullname, role }: CreateUserInput = req.body;
+  try {
+    const password: string = bcrypt.hashSync(req.body.password, 10);
+    const createUser = await authService.registerService({
+      email,
+      fullname,
+      password,
+      role,
+    });
+
+    return res.status(200).json({ user: createUser });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+router.post('/login', async (req: Request, res: Response) => {
+  const { email, password }: LoginUserInput = req.body;
+  try {
+    const user = await authService.findByEmail(email);
+    if (!user) {
+      return res.json({ message: "login failed!" });
+    }
+    const isMatch: boolean = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "login failed!" });
+    }
+    const token = user.generateAuthToken();
+    return res.json({ user, token });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+router.get('/me', auth, async (req: Request, res: Response) => {
+  const token = req.headers.authorization;
+  const jsonPayload = JSON.parse(
+    Buffer.from(token.split(".")[1], "base64").toString(),
+  );
+  try {
+    const user = await authService.findUserById(jsonPayload.id);
+    return res.json({ user });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+export default router;

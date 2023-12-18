@@ -1,19 +1,17 @@
-import express, { Application } from "express";
+import { Application } from "express";
 import * as bodyParser from "body-parser";
-import { AuthRoute } from "./routes/auth.route";
-import { ProductRoute } from "./routes/product.route";
-import { CartRoute } from "./routes/cart.route";
-import { OrderRoute } from "./routes/order.route";
+import auth from "./routes/auth.route";
+import products from "./routes/product.route";
+import carts from "./routes/cart.route";
+import orders from "./routes/order.route";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerDoc from "./swagger.json";
 
-export const setupRestEndpoint = (app: Application) => {
-  const router = express.Router();
+export const setupRoutes = (app: Application) => {
   app.use(bodyParser.json());
-  app.use("/", router);
-  app.use("/", AuthRoute());
-  app.use("/", ProductRoute());
-  app.use("/", CartRoute());
-  app.use("/", OrderRoute());
+  app.use("/api/auth", auth);
+  app.use("/api/products", products);
+  app.use("/api/carts", carts);
+  app.use("/api/orders", orders);
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 };

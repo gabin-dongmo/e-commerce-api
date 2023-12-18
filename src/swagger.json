@@ -19,7 +19,7 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/auth/register": {
+    "/api/auth/register": {
       "post": {
         "tags": ["Register"],
         "description": "Create new user in system",
@@ -44,7 +44,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": ["Login"],
         "description": "Login user in system",
@@ -69,7 +69,7 @@
         }
       }
     },
-    "/auth/me": {
+    "/api/auth/me": {
       "get": {
         "summary": "Current user",
         "tags": ["Login"],
@@ -83,7 +83,7 @@
         }
       }
     },
-    "/products": {
+    "/api/products": {
       "get": {
         "summary": "Get all products in system",
         "tags": ["Products"],
@@ -97,7 +97,7 @@
         }
       }
     },
-    "/products/": {
+    "/api/products/": {
       "post": {
         "tags": ["Products"],
         "summary": "Create new product in system",
@@ -122,7 +122,7 @@
         }
       }
     },
-    "/products/delete/{myid}": {
+    "/api/products/delete/{myid}": {
       "parameters": [
         {
           "name": "id",
@@ -145,7 +145,7 @@
         }
       }
     },
-    "/products/{id}": {
+    "/api/products/{id}": {
       "put": {
         "summary": "Update product with given ID",
         "tags": ["Products"],
@@ -168,7 +168,7 @@
         }
       }
     },
-    "/carts": {
+    "/api/carts": {
       "get": {
         "summary": "Get all carts in system",
         "tags": ["Carts"],
@@ -182,7 +182,7 @@
         }
       }
     },
-    "/carts/": {
+    "/api/carts/": {
       "post": {
         "tags": ["Carts"],
         "summary": "Create new cart in system",
@@ -207,7 +207,7 @@
         }
       }
     },
-    "/carts/delete/{id}": {
+    "/api/carts/delete/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -230,7 +230,7 @@
         }
       }
     },
-    "/orders": {
+    "/api/orders": {
       "get": {
         "summary": "Get all orders in system",
         "tags": ["Orders"],
@@ -244,7 +244,7 @@
         }
       }
     },
-    "/orders/": {
+    "/api/orders/": {
       "post": {
         "tags": ["Orders"],
         "summary": "Create new order in system",
@@ -269,7 +269,7 @@
         }
       }
     },
-    "/orders/delete/{id}": {
+    "/api/orders/delete/{id}": {
       "parameters": [
         {
           "name": "id",
