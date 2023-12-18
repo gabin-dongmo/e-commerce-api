@@ -5,7 +5,7 @@ import carts from "../routes/cart.route";
 import orders from "../routes/order.route";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerDoc from "../swagger.json";
-import { error } from "../middleware/error";
+import { error } from "../middleware/error.middleware";
 
 export const setupRoutes = (app: Application) => {
   app.use(express.json());
