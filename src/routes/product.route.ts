@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import { auth } from "../shared/core/middleware/auth.middleware";
+import { auth } from "../middleware/auth.middleware";
 import productService from "../domain/services/product.service";
-import { CreateProductInput } from "../shared/types/models";
+import { CreateProductInput } from "../common/dtos";
 import { UserModel } from "../domain/models/user.model";
 import { parseRequest } from "../utils/helpers";
 import { ProductUpdateParams } from "../domain/models/product.model";

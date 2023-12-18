@@ -1,4 +1,4 @@
-import { CreateCartInput } from "../../shared/types/models";
+import { CreateCartInput } from "../../common/dtos";
 import { CartModel } from "../models/cart.model";
 
 const create = async (input: CreateCartInput) => {

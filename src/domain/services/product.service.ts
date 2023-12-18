@@ -1,4 +1,4 @@
-import { CreateProductInput } from "../../shared/types/models";
+import { CreateProductInput } from "../../common/dtos";
 import { ProductModel } from "../models/product.model";
 
 const create = async (input: CreateProductInput) => {
