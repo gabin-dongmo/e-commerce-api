@@ -1,6 +1,6 @@
 import request from "supertest";
 import { server } from "../../index";
-import { UserModel } from "../../src/domain/models/user.model";
+import { UserModel } from "../../src/models/user.model";
 
 let serverInstance: any;
 
