@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { auth } from "../shared/core/middleware/auth";
+import { auth } from "../shared/core/middleware/auth.middleware";
 import { CreateOrderInput } from "../shared/types/models";
 import { CartModel } from "../domain/models/cart.model";
 import { UserModel } from "../domain/models/user.model";

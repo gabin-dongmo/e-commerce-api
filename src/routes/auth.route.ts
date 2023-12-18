@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { auth } from "../shared/core/middleware/auth";
+import { auth } from "../shared/core/middleware/auth.middleware";
 import { CreateUserInput, LoginUserInput } from "../shared/types/models";
 import authService from "../domain/services/auth.service";
 import * as bcrypt from "bcryptjs";
