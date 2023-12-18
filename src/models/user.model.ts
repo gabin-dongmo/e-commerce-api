@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../../startup/config";
+import { JWT_SECRET } from "../startup/config";
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
   fullname: { type: String, required: true },

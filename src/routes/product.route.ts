@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
-import productService from "../domain/services/product.service";
+import productService from "../services/product.service";
 import { CreateProductInput } from "../common/dtos";
-import { UserModel } from "../domain/models/user.model";
+import { UserModel } from "../models/user.model";
 import { parseRequest } from "../utils/helpers";
-import { ProductUpdateParams } from "../domain/models/product.model";
+import { ProductUpdateParams } from "../models/product.model";
 
 const router = Router();
 router.post("/", auth, async (req: Request, res: Response) => {

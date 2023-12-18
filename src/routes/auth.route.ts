@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
 import { CreateUserInput, LoginUserInput } from "../common/dtos";
-import authService from "../domain/services/auth.service";
+import authService from "../services/auth.service";
 import * as bcrypt from "bcryptjs";
 
 const router = Router();

@@ -1,11 +1,11 @@
 import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
 import { CreateOrderInput } from "../common/dtos";
-import { CartModel } from "../domain/models/cart.model";
-import { UserModel } from "../domain/models/user.model";
-import orderService from "../domain/services/order.service";
+import { CartModel } from "../models/cart.model";
+import { UserModel } from "../models/user.model";
+import orderService from "../services/order.service";
 import { parseRequest } from "../utils/helpers";
-import { OrderUpdateParams } from "../domain/models/order.model";
+import { OrderUpdateParams } from "../models/order.model";
 
 const router = Router();
 

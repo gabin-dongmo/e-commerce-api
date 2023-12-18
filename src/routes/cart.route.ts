@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
 import { CreateCartInput } from "../common/dtos";
-import { ProductModel } from "../domain/models/product.model";
-import cartService from "../domain/services/cart.service";
+import { ProductModel } from "../models/product.model";
+import cartService from "../services/cart.service";
 import { parseRequest } from "../utils/helpers";
-import { CartUpdateParams } from "../domain/models/cart.model";
+import { CartUpdateParams } from "../models/cart.model";
 
 const router = Router();
 
