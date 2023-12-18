@@ -10,57 +10,37 @@ const router = Router();
 
 router.post("/", auth, async (req: Request, res: Response) => {
   const { quantity }: CreateCartInput = req.body;
-  try {
-    const product = await ProductModel.findById({ _id: req.body.product });
-    const createCart = await cartService.create({
-      quantity,
-      product,
-    });
-    product.carts.push(createCart._id);
-    await product.save();
-    await createCart.save();
-    return res.json({ cart: createCart });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  const product = await ProductModel.findById({ _id: req.body.product });
+  const createCart = await cartService.create({
+    quantity,
+    product,
+  });
+  product.carts.push(createCart._id);
+  await product.save();
+  await createCart.save();
+  return res.json({ cart: createCart });
 });
 
 router.get("/", auth, async (req: Request, res: Response) => {
-  try {
-    const carts = await cartService.findAll();
-    return res.json({ carts });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  const carts = await cartService.findAll();
+  return res.json({ carts });
 });
 
 router.get("/:id", auth, async (req: Request, res: Response) => {
-  try {
-    const cart = await cartService.findById(req.params.id);
-    return res.json({ cart });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  const cart = await cartService.findById(req.params.id);
+  return res.json({ cart });
 });
 
 router.put("/:id", auth, async (req: Request, res: Response) => {
   const id = req.params.id;
   const data = parseRequest(req.body, CartUpdateParams);
-  try {
-    const updateCart = await cartService.update(id, data);
-    return res.json({ cart: updateCart });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  const updateCart = await cartService.update(id, data);
+  return res.json({ cart: updateCart });
 });
 
 router.delete("/:id", auth, async (req: Request, res: Response) => {
-  try {
-    await cartService.deleteById(req.params.id);
-    return res.json({ message: "cart delete success!!!" });
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  await cartService.deleteById(req.params.id);
+  return res.json({ message: "cart delete success!!!" });
 });
 
 export default router;

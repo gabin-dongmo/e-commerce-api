@@ -1,3 +1,4 @@
+import "express-async-errors";
 import { createLogger, format, transports } from "winston";
 
 const { combine, timestamp, prettyPrint } = format;

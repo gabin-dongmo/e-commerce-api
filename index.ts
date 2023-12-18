@@ -1,6 +1,6 @@
 import express from "express";
 import { logger } from "./src/startup/logging";
-import { setupRoutes } from "./src/server";
+import { setupRoutes } from "./src/startup/routes";
 import { PORT } from "./src/startup/config";
 import { connectToDB } from "./src/startup/database";
 
