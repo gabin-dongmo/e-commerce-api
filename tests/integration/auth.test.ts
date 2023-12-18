@@ -16,7 +16,7 @@ describe("auth middleware", () => {
 
   const exec = () => {
     return request(serverInstance)
-      .post("/products")
+      .post("/api/products")
       .set("authorization", token)
       .send({});
   };
