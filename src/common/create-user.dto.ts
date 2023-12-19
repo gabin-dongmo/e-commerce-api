@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { UserRole } from "../models/user.model";
 
-export type CreateUserDto = {
+type CreateUserDto = {
   firstName: string;
   lastName: string;
   email: string;
@@ -9,12 +9,12 @@ export type CreateUserDto = {
   role?: UserRole;
 };
 
-export function validateUser(dto: CreateUserDto) {
+export function validateUserCreation(dto: CreateUserDto) {
   const schema = z.object({
-    firstName: z.string().max(50),
-    lastName: z.string().max(75),
+    firstName: z.string().min(1).max(50),
+    lastName: z.string().min(1).max(75),
     email: z.string().email().max(255),
-    password: z.string(),
+    password: z.string().min(1),
   });
 
   return schema.safeParse(dto);

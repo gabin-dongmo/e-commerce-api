@@ -1,18 +1,18 @@
+import _ from "lodash";
+import * as bcrypt from "bcryptjs";
 import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
-import { LoginUserInput } from "../common/dtos";
-import authService from "../services/auth.service";
-import * as bcrypt from "bcryptjs";
 import { validate } from "../middleware/validate.middleware";
-import { validateUser } from "../common/create-user.dto";
+import authService from "../services/auth.service";
+import { validateUserCreation } from "../common/create-user.dto";
 import { User } from "../models/user.model";
-import _ from "lodash";
+import { LoginUserDto, validateUserLogin } from "../common/login-user.dto";
 
 const router = Router();
 
 router.post(
   "/",
-  validate(validateUser),
+  validate(validateUserCreation),
   async (req: Request, res: Response) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send("User already registered.");
@@ -31,26 +31,40 @@ router.post(
   },
 );
 
-router.post("/login", async (req: Request, res: Response) => {
-  const { email, password }: LoginUserInput = req.body;
-  const user = await authService.findByEmail(email);
-  if (!user) {
-    return res.json({ message: "login failed!" });
-  }
+router.post(
+  "/login",
+  validate(validateUserLogin),
+  async (req: Request, res: Response) => {
+    const { email, password } = req.body as LoginUserDto;
+    const user = await authService.findByEmail(email);
+    if (!user) {
+      return res.json({ message: "login failed!" });
+    }
 
-  const isMatch: boolean = bcrypt.compareSync(password, user.password);
-  if (!isMatch) {
-    return res.status(400).json({ message: "login failed!" });
-  }
+    const isMatch: boolean = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "login failed!" });
+    }
 
-  const token = user.generateAuthToken();
+    const token = user.generateAuthToken();
 
-  return res.json({ user, token });
-});
+    return res.json({ token });
+  },
+);
 
 router.get("/me", auth, async (req: Request & { user: any }, res: Response) => {
   const user = await authService.findUserById(req.user.id);
-  return res.json({ user });
+  return res.json(
+    _.pick(user, [
+      "_id",
+      "firstName",
+      "lastName",
+      "email",
+      "role",
+      "orders",
+      "products",
+    ]),
+  );
 });
 
 export default router;
