@@ -1,6 +1,6 @@
 import request from "supertest";
 import { server } from "../../index";
-import { UserModel } from "../../src/models/user.model";
+import { User } from "../../src/models/user.model";
 
 let serverInstance: any;
 
@@ -8,7 +8,7 @@ describe("auth middleware", () => {
   let token: string;
   beforeEach(async () => {
     serverInstance = server;
-    token = `Bearer ${new UserModel().generateAuthToken()}`;
+    token = `Bearer ${new User().generateAuthToken()}`;
   });
   afterEach(async () => {
     await serverInstance.close();

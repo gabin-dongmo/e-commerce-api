@@ -2,14 +2,14 @@ import { Request, Response, Router } from "express";
 import { auth } from "../middleware/auth.middleware";
 import productService from "../services/product.service";
 import { CreateProductInput } from "../common/dtos";
-import { UserModel } from "../models/user.model";
+import { User } from "../models/user.model";
 import { parseRequest } from "../utils/helpers";
 import { ProductUpdateParams } from "../models/product.model";
 
 const router = Router();
 router.post("/", auth, async (req: Request, res: Response) => {
   const { costUnity, name, quantityAvailabe }: CreateProductInput = req.body;
-  const user = await UserModel.findById({ _id: req.body.user });
+  const user = await User.findById({ _id: req.body.user });
   const createProduct = await productService.create({
     costUnity,
     name,

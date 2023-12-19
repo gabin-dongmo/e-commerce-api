@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
 import { auth } from "../../src/middleware/auth.middleware";
-import { UserModel } from "../../src/models/user.model";
+import { User } from "../../src/models/user.model";
 
 interface AuthRequest extends Request {
   header: jest.Mock;
@@ -13,7 +13,7 @@ describe(`auth middleware`, () => {
     const user = {
       id: new mongoose.Types.ObjectId().toHexString(),
     };
-    const token = new UserModel(user).generateAuthToken();
+    const token = new User(user).generateAuthToken();
     const req = {
       header: jest.fn().mockReturnValue(token),
     } as AuthRequest;
