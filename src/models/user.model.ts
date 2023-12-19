@@ -2,17 +2,21 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../startup/config";
 
-export enum UserType {
-  ADMIN,
-  CUSTOMER,
+export enum UserRole {
+  ADMIN = "Admin",
+  CUSTOMER = "Customer",
 }
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
-  firstName: { type: String, required: true, minLength: 5, maxLength: 50 },
-  lastName: { type: String, required: true, minLength: 5, maxLength: 75 },
+  firstName: { type: String, required: true, maxLength: 50 },
+  lastName: { type: String, required: true, maxLength: 75 },
   email: { type: String, required: true, unique: true, maxLength: 255 },
   password: { type: String, required: true },
-  role: { type: UserType, default: UserType.CUSTOMER },
+  role: {
+    type: String,
+    enum: [UserRole.ADMIN, UserRole.CUSTOMER],
+    default: UserRole.CUSTOMER,
+  },
   createdAt: { type: Date, default: Date.now() },
   orders: [
     {
@@ -32,4 +36,4 @@ userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ id: this._id }, JWT_SECRET);
 };
 
-export const UserModel = mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
